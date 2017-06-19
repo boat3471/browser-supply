@@ -10,7 +10,7 @@
 	</style>
 </head>
 <body>
-<div>V1.0.1</div>
+<div>V1.0.2</div>
 <div>
 	<script>
 		function Browser(){
@@ -23,7 +23,8 @@
 			/* Android 平台 */
 			if(u.match(/Android/i)){
 				this.Mobile = this.Android = true;
-				if(u.match(/Firefox\//i) && !u.match(/Chrome\//i)) this.Firefox = true;
+				if(u.match(/Firefox/i)) this.Firefox = true;
+				if(u.match(/Chrome/i)) this.Chrome = true;
 				return;
 			}
 			
