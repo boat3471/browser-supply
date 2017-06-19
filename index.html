@@ -10,7 +10,7 @@
 	</style>
 </head>
 <body>
-<div>V1.0.5</div>
+<div>V1.0.6</div>
 <div>
 	<script>
 		function Browser(){
@@ -18,7 +18,7 @@
 			this.PC = this.Mobile = false;
 			this.WPhone = this.BlackBerry = this.Symbian = this.iPod = this.iPad = this.iPhone = this.Android = false;
 			this.IE = this.IE4 = this.IE5 = this.IE6 = this.IE7 = this.IE8 = this.IE9 = this.IE10 = this.IE11 = this.Edge = false;
-			this.Chrome = this.Firefox = this.Opera = false;
+			this.Chrome = this.Safari = this.Firefox = this.Opera = false;
 			this.Version = '';
 			
 			/* Android 平台 */
@@ -36,27 +36,17 @@
 				return;
 			}
 			
-			/* iPhone 平台 */
-			if(u.match(/iPhone/i)){
-				this.Mobile = this.Apple = this.iPhone = true;
+			/* iPhone/iPad/iPod 平台 */
+			if(u.match(/iPhone/i) || u.match(/\(iPad/i) || u.match(/\(iPod/i)){
+				this.Mobile = this.Apple = true;
+				if(u.match(/iPhone/i)) this.iPhone = true;
+				if(u.match(/iPad/i)) this.iPad = true;
+				if(u.match(/iPod/i)) this.iPod = true;
 				if(u.match(/CriOS/i)){ this.Chrome = true; this.Version = this.match(/CriOS\/(\S*) /)[1] || ''; }
 				if(u.match(/FxiOS/i)){ this.Firefox = true; this.Version = this.match(/FxiOS\/(\S*) /)[1] || ''; }
-				return;
-			}
-			
-			/* iPad 平台 */
-			if(u.match(/\(iPad/i)){
-				this.Mobile = this.Apple = this.iPad = true;
-				if(u.match(/CriOS/i)) this.Chrome = true;
-				if(u.match(/FxiOS/i)) this.Firefox = true;
-				return;
-			}
-			
-			/* iPod 平台 */
-			if(u.match(/\(iPod/i)){
-				this.Mobile = this.Apple = this.iPod = true;
-				if(u.match(/CriOS/i)) this.Chrome = true;
-				if(u.match(/FxiOS/i)) this.Firefox = true;
+				if(u.match(/Safari/i)){ this.Safari = true; this.Version = this.match(/Safari\/(\S*)/)[1] || ''; }
+				if(u.match(/UCBrowser/i)){ this.UCBrowser = true; this.Version = this.match(/UCBrowser\/(\S*) /)[1] || ''; }
+				if(u.match(/QQ/i)){ this.QQ = true; }
 				return;
 			}
 			
@@ -64,36 +54,13 @@
 			
 			
 			/* BlackBerry 平台*/
-			if(u.match(/BlackBerry/i)){
-				this.Mobile = this.BlackBerry = true;
-				//Chrome
-				//Firefox
-				//Opera
-				//......
-				return;
-			}
-			
+			if(u.match(/BlackBerry/i)){ this.Mobile = this.BlackBerry = true; return; }
 			/* Symbian 平台*/
-			if(u.match(/Symbian/i)){
-				this.Mobile = this.Symbian = true;
-				//Chrome
-				//Firefox
-				//Opera
-				//......
-				return;
-			}
-			
+			if(u.match(/Symbian/i)){ this.Mobile = this.Symbian = true;	return;	}
 			/* Windows Phone 平台*/
-			if(u.match(/Windows Phone/i)){
-				this.Mobile = this.WPhone = true;
-				//Chrome
-				//Firefox
-				//Opera
-				//......
-				return;
-			}
+			if(u.match(/Windows Phone/i)){ this.Mobile = this.WPhone = true; return; }
 			
-			/* IE */
+			/* IE - 桌面浏览器 */
 			if(u.match(/Edge\//i)){ this.PC = this.IE = this.Edge = true; return; }
 			if(u.match(/Trident\//i) && u.match(/rv\:11/i)){ this.PC = this.IE = this.IE11 = true; return; }
 			if(u.match(/MSIE 10\./i)){ this.PC = this.IE = this.IE10 = true; return; }
@@ -104,13 +71,22 @@
 			if(u.match(/MSIE 5\./i)){ this.PC = this.IE = this.IE5 = true; return; }
 			if(u.match(/MSIE 4\./i)){ this.PC = this.IE = this.IE4 = true; return; }
 			
-			/* Opera 浏览器 */
-			if(u.match(/OPR\//i) || u.match(/Opera/i)){ this.PC = this.Opera = true; return; }
-			if(u.match(/Firefox/i)){ this.PC = this.Firefox = true; }
-			if(u.match(/Chrome\//i) && !u.match(/OPR\//i) && !u.match(/Firefox\//i)){ this.PC = this.Chrome = true; }
+			/* 桌面浏览器 */
+			if(u.match(/OPR\//i) || u.match(/Opera/i)){
+				this.PC = this.Opera = true;
+				this.Version = this.match(/OPR\/(\S*)/)[1] || this.match(/OPR\/(\S*) /)[1] || '';
+				return;
+			}
+			if(u.match(/Firefox/i)){
+				this.PC = this.Firefox = true;
+				this.Version = this.match(/Firefox\/(\S*)/)[1] || this.match(/Firefox\/(\S*) /)[1] || '';
+			}
+			if(u.match(/Chrome\//i) && !u.match(/OPR\//i) && !u.match(/Firefox\//i)){
+				this.PC = this.Chrome = true;
+				this.Version = this.match(/Chrome\/(\S*) /)[1] || '';
+				return;
+			}
 			if(u.match(/Macintosh\;/i) && u.match(/Safari\//i)){ this.PC = this.Safari = true; }
-			
-			if(u.match(/QQ/i)) this.QQ = true;
 		}
 		
 		Browser.prototype.toString = function(){
