@@ -10,7 +10,7 @@
 	</style>
 </head>
 <body>
-<div>V1.0.3</div>
+<div>V1.0.4</div>
 <div>
 	<script>
 		function Browser(){
@@ -24,7 +24,7 @@
 			/* Android 平台 */
 			if(u.match(/Android/i)){
 				this.Mobile = this.Android = true;
-				if(u.match(/Firefox/i)) this.Firefox = true;
+				if(u.match(/Firefox/i)){ this.Firefox = true; this.Version = this.match(/Firefox\/(\S*)/)[1] || ''; }
 				if(u.match(/Chrome/i)){ this.Chrome = true; this.Version = this.match(/Chrome\/(\S*) /)[1] || ''; }
 				return;
 			}
@@ -32,8 +32,8 @@
 			/* iPhone 平台 */
 			if(u.match(/iPhone/i)){
 				this.Mobile = this.Apple = this.iPhone = true;
-				if(u.match(/CriOS/i)) this.Chrome = true;
-				if(u.match(/FxiOS/i)) this.Firefox = true;
+				if(u.match(/CriOS/i)){ this.Chrome = true; this.Version = this.match(/CriOS\/(\S*) /)[1] || ''; }
+				if(u.match(/FxiOS/i)){ this.Firefox = true; this.Version = this.match(/FxiOS\/(\S*) /)[1] || ''; }
 				return;
 			}
 			
@@ -116,10 +116,10 @@
 			var htmlList = [], k;
 			htmlList.push('<table>');
 			for(k in the){
+				if(k == 'toString' || k == 'match') continue;
 				var value = the[k];
 				var color = value == true ? 'red' : 'black';
 				var size = k == 'UA' ? 12 : 16;
-				if(k == 'toString') continue;
 				htmlList.push('<tr><td style="font-weight:bold;color:' + color + '">' + k + '：</td><td style="color:blue;font-size:' + size + 'px;">' + value + '</td></tr>');
 			}
 			htmlList.push('</table>');
