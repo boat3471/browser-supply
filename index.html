@@ -10,7 +10,7 @@
 	</style>
 </head>
 <body>
-<div>V1.0.2</div>
+<div>V1.0.3</div>
 <div>
 	<script>
 		function Browser(){
@@ -19,12 +19,13 @@
 			this.WPhone = this.BlackBerry = this.Symbian = this.iPod = this.iPad = this.iPhone = this.Android = false;
 			this.IE = this.IE4 = this.IE5 = this.IE6 = this.IE7 = this.IE8 = this.IE9 = this.IE10 = this.IE11 = this.Edge = false;
 			this.Chrome = this.Firefox = this.Opera = false;
+			this.Version = '';
 			
 			/* Android 平台 */
 			if(u.match(/Android/i)){
 				this.Mobile = this.Android = true;
 				if(u.match(/Firefox/i)) this.Firefox = true;
-				if(u.match(/Chrome/i)) this.Chrome = true;
+				if(u.match(/Chrome/i)){ this.Chrome = true; this.Version = this.match(/Chrome\/(\S*) /)[1] || ''; }
 				return;
 			}
 			
@@ -111,17 +112,22 @@
 		}
 		
 		Browser.prototype.toString = function(){
-			var htmlList = [];
+			var the = this;
+			var htmlList = [], k;
 			htmlList.push('<table>');
-			for(var key in this){
-				var value = this[key];
+			for(k in the){
+				var value = the[k];
 				var color = value == true ? 'red' : 'black';
-				var size = key == 'UA' ? 12 : 16;
-				if(key == 'toString') continue;
-				htmlList.push('<tr><td style="font-weight:bold;color:' + color + '">' + key + '：</td><td style="color:blue;font-size:' + size + 'px;">' + value + '</td></tr>');
+				var size = k == 'UA' ? 12 : 16;
+				if(k == 'toString') continue;
+				htmlList.push('<tr><td style="font-weight:bold;color:' + color + '">' + k + '：</td><td style="color:blue;font-size:' + size + 'px;">' + value + '</td></tr>');
 			}
 			htmlList.push('</table>');
 			return htmlList.join('');
+		};
+		
+		Browser.prototype.match = function(reg){
+			return this.UA.match(reg) || [];
 		};
 		
 		var browser = new Browser();
