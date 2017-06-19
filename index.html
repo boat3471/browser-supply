@@ -10,7 +10,7 @@
 	</style>
 </head>
 <body>
-<div>V1.0.6</div>
+<div>V1.0.7</div>
 <div>
 	<script>
 		function Browser(){
@@ -61,15 +61,15 @@
 			if(u.match(/Windows Phone/i)){ this.Mobile = this.WPhone = true; return; }
 			
 			/* IE - 桌面浏览器 */
-			if(u.match(/Edge\//i)){ this.PC = this.IE = this.Edge = true; return; }
-			if(u.match(/Trident\//i) && u.match(/rv\:11/i)){ this.PC = this.IE = this.IE11 = true; return; }
-			if(u.match(/MSIE 10\./i)){ this.PC = this.IE = this.IE10 = true; return; }
-			if(u.match(/MSIE 9\./i)){ this.PC = this.IE = this.IE9 = true; return; }
-			if(u.match(/MSIE 8\./i)){ this.PC = this.IE = this.IE8 = true; return; }
-			if(u.match(/MSIE 7\./i)){ this.PC = this.IE = this.IE7 = true; return; }
-			if(u.match(/MSIE 6\./i)){ this.PC = this.IE = this.IE6 = true; return; }
-			if(u.match(/MSIE 5\./i)){ this.PC = this.IE = this.IE5 = true; return; }
-			if(u.match(/MSIE 4\./i)){ this.PC = this.IE = this.IE4 = true; return; }
+			if(u.match(/Edge\//i)){ this.PC = this.IE = this.Edge = true; this.Version = this.match(/Edge\/(\S*)/)[1] || ''; return; }
+			if(u.match(/Trident\//i) && u.match(/rv\:11/i)){ this.PC = this.IE = this.IE11 = true; this.Version = '11'; return; }
+			if(u.match(/MSIE 10\./i)){ this.PC = this.IE = this.IE10 = true; this.Version = '10'; return; }
+			if(u.match(/MSIE 9\./i)){ this.PC = this.IE = this.IE9 = true; this.Version = '9'; return; }
+			if(u.match(/MSIE 8\./i)){ this.PC = this.IE = this.IE8 = true; this.Version = '8'; return; }
+			if(u.match(/MSIE 7\./i)){ this.PC = this.IE = this.IE7 = true; this.Version = '7'; return; }
+			if(u.match(/MSIE 6\./i)){ this.PC = this.IE = this.IE6 = true; this.Version = '6'; return; }
+			if(u.match(/MSIE 5\./i)){ this.PC = this.IE = this.IE5 = true; this.Version = '5'; return; }
+			if(u.match(/MSIE 4\./i)){ this.PC = this.IE = this.IE4 = true; this.Version = '4'; return; }
 			
 			/* 桌面浏览器 */
 			if(u.match(/OPR\//i) || u.match(/Opera/i)){
