@@ -31,6 +31,7 @@
 			if(u.match(/iPhone/i)){
 				this.Mobile = this.Apple = this.iPhone = true;
 				if(u.match(/CriOS/i)) this.Chrome = true;
+				if(u.match(/FxiOS/i)) this.Firefox = true;
 				return;
 			}
 			
@@ -38,6 +39,7 @@
 			if(u.match(/\(iPad/i)){
 				this.Mobile = this.Apple = this.iPad = true;
 				if(u.match(/CriOS/i)) this.Chrome = true;
+				if(u.match(/FxiOS/i)) this.Firefox = true;
 				return;
 			}
 			
@@ -45,6 +47,7 @@
 			if(u.match(/\(iPod/i)){
 				this.Mobile = this.Apple = this.iPod = true;
 				if(u.match(/CriOS/i)) this.Chrome = true;
+				if(u.match(/FxiOS/i)) this.Firefox = true;
 				return;
 			}
 			
@@ -93,13 +96,13 @@
 			if(u.match(/MSIE 4\./i)){ this.PC = this.IE = this.IE4 = true; return; }
 			
 			/* Opera 浏览器 */
-			if(u.match(/OPR\//i) || u.match(/Opera\//i)){
+			if(u.match(/OPR\//i) || u.match(/Opera/i)){
 				if(u.match(/X11/i) && u.match(/Linux/i)) this.Mobile = this.Android = true;
 				else this.PC = true;
 				this.Opera = true;
 				return;
 			}
-			if(u.match(/Firefox\//i)){ this.PC = this.Firefox = true; }
+			if(u.match(/Firefox/i)){ this.PC = this.Firefox = true; }
 			if(u.match(/Chrome\//i) && !u.match(/OPR\//i) && !u.match(/Firefox\//i)){ this.PC = this.Chrome = true; }
 			if(u.match(/Macintosh\;/i) && u.match(/Safari\//i)){ this.PC = this.Safari = true; }
 			
