@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<title>浏览器检查</title>
 	<style>
 		body{ font-family:Consolas; }
 		.title{ font-weight:bold; display:inline-block; width:95px; text-align:right; padding-right:6px; }
@@ -10,22 +10,72 @@
 </head>
 <body>
 <div>
-	<script>document.write(navigator.userAgent);</script>
-</div>
-<div>
 	<script>
 		function Browser(){
-			var u = this.ua = navigator.userAgent;
+			var u = this.UA = navigator.userAgent;
 			this.PC = this.Mobile = false;
-			this.Android = this.iPhone = this.iPad = this.iPod = this.BlackBerry = this.WPhone = false;
-			this.IE = this.IE6 = this.IE7 = this.IE8 = this.IE9 = this.IE10 = this.IE11 = this.Edge = false;
+			this.WPhone = this.BlackBerry = this.Symbian = this.iPod = this.iPad = this.iPhone = this.Android = false;
+			this.IE = this.IE4 = this.IE5 = this.IE6 = this.IE7 = this.IE8 = this.IE9 = this.IE10 = this.IE11 = this.Edge = false;
+			this.Chrome = this.Firefox = this.Opera = false;
 			
 			/* Android 平台 */
 			if(u.match(/Android/i)){
-				this.Android = true;
-				this.Mobile = true;
-				if(u.match(/Firefox\//i) && !u.match(/Chrome\//i)) return (this.Firefox = true);
+				this.Mobile = this.Android = true;
+				if(u.match(/Firefox\//i) && !u.match(/Chrome\//i)) this.Firefox = true;
+				return;
 			}
+			
+			/* iPhone 平台 */
+			if(u.match(/\(iPhone/i)){
+				this.Mobile = this.Apple = this.iPhone = true;
+				return;
+			}
+			
+			/* iPad 平台 */
+			if(u.match(/\(iPad/i)){
+				this.Mobile = this.Apple = this.iPad = true;
+				return;
+			}
+			
+			/* iPod 平台 */
+			if(u.match(/\(iPod/i)){
+				this.Mobile = this.Apple = this.iPod = true;
+				return;
+			}
+			
+			/* BlackBerry 平台*/
+			if(u.match(/BlackBerry/i)){
+				this.Mobile = this.BlackBerry = true;
+				//Chrome
+				//Firefox
+				//Opera
+				//......
+				return;
+			}
+			
+			/* Symbian 平台*/
+			if(u.match(/Symbian/i)){
+				this.Mobile = this.Symbian = true;
+				//Chrome
+				//Firefox
+				//Opera
+				//......
+				return;
+			}
+			
+			/* Windows Phone 平台*/
+			if(u.match(/Windows Phone/i)){
+				this.Mobile = this.WPhone = true;
+				//Chrome
+				//Firefox
+				//Opera
+				//......
+				return;
+			}
+			
+			/* Mac 平台 */
+			
+			
 			
 			/* IE */
 			if(u.match(/Edge\//i)){ this.PC = this.IE = this.Edge = true; return; }
@@ -35,19 +85,13 @@
 			if(u.match(/MSIE 8\./i)){ this.PC = this.IE = this.IE8 = true; return; }
 			if(u.match(/MSIE 7\./i)){ this.PC = this.IE = this.IE7 = true; return; }
 			if(u.match(/MSIE 6\./i)){ this.PC = this.IE = this.IE6 = true; return; }
+			if(u.match(/MSIE 5\./i)){ this.PC = this.IE = this.IE5 = true; return; }
+			if(u.match(/MSIE 4\./i)){ this.PC = this.IE = this.IE4 = true; return; }
 			
-			if(u.match(/Chrome\//i) && u.match(/OPR\//i)){ this.PC = this.Opera = true; }
-			if(u.match(/Firefox\//i) && !u.match(/Chrome\//i)){ this.PC = this.Firefox = true; }
+			if(u.match(/OPR\//i) || u.match(/Opera\//i)){ this.PC = this.Opera = true; }
+			if(u.match(/Firefox\//i)){ this.PC = this.Firefox = true; }
 			if(u.match(/Chrome\//i) && !u.match(/OPR\//i) && !u.match(/Firefox\//i)){ this.PC = this.Chrome = true; }
 			if(u.match(/Macintosh\;/i) && u.match(/Safari\//i)){ this.PC = this.Safari = true; }
-			
-			//移动设备
-			if(u.match(/\(iPod/i)){ this.iPod = true; this.Mobile = true; }
-			
-			//Android
-			
-			
-			//Iphone
 			
 			
 			u = 'Mozilla/5.0 (Linux; U; Android 6.0.1; zh-cn; MI 5s Plus Build/MXB48T) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.146 Mobile Safari/537.36 XiaoMi/MiuiBrowser/8.8.7';
@@ -68,16 +112,21 @@
 			u = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; SAMSUNG; OMNIA7)　　　　　　----SAMSUNG MP7';
 			u = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; XBLWP7; ZuneWP7) 　　　　　　　　----HTC MP7';
 		}
-		if(window['JSON'])
-			document.write(JSON.stringify(new Browser(), null, 4));
-		else
-			console.info(new Browser());
-		
-		function ispc(){
-			var u = navigator.userAgent;
-			if(u.match(/Android/i) || u.match(/webOS/i) || u.match(/iPhone/i) || u.match(/iPad/i) || u.match(/iPod/i) || u.match(/BlackBerry/i) || u.match(/Windows Phone/i)) return false;
-			else return true;
-		}
+		Browser.prototype.toString = function(){
+			var htmlList = [];
+			htmlList.push('<table>');
+			for(var key in this){
+				var value = this[key];
+				var color = value == true ? 'red' : 'black';
+				var size = key == 'UA' ? 12 : 16;
+				if(key == 'toString') continue;
+				htmlList.push('<tr><td style="font-weight:bold;color:' + color + '">' + key + '：</td><td style="color:blue;font-size:' + size + 'px;">' + value + '</td></tr>');
+			}
+			htmlList.push('</table>');
+			return htmlList.join('');
+		};
+		var browser = new Browser();
+		document.write(browser.toString());
 	</script>
 </div>
 <div style="padding: 30px 0; font-size: 12px; width: 3000px;">
@@ -101,18 +150,22 @@
 	Mozilla/5.0 (Linux; U; Android 6.0.1; zh-cn; MI 5s Plus Build/MXB48T) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.146 Mobile Safari/537.36 XiaoMi/MiuiBrowser/8.8.7<br>
 	Mozilla/5.0 (Linux; Android 7.0; MI 5s Plus Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 MiniQB/02021003(20170426_112633) TBS/043305 Safari/537.36<br>
 	Mozilla/5.0 (Linux; Android 7.0; MI 5s Plus Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043305 Safari/537.36 MicroMessenger/6.5.8.1060 NetType/WIFI Language/zh_CN<br>
+	
+	
 	Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 QQ/7.1.0.407 V1_IPH_SQ_7.1.0_1_APP_A Pixel/750 Core/UIWebView NetType/WIFI QBWebViewType/1<br>
 	Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.0 Mobile/14F89 Safari/602.1<br>
-	Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_2 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5<br>
 	Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5<br>
+	Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A5313e Safari/7534.48.3<br>
+	Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A5313e Safari/7534.48.3<br>
+	Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A5313e Safari/7534.48.3<br>
+	Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_2 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5<br>
+	
 	MQQBrowser/25 (Linux; U; 2.3.3; zh-cn; HTC Desire S Build/GRI40;480*800)<br>
 	Mozilla/5.0 (Linux; U; Android 2.3.3; zh-cn; HTC_DesireS_S510e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1<br>
 	Mozilla/5.0 (SymbianOS/9.3; U; Series60/3.2 NokiaE75-1 /110.48.125 Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413<br>
 	Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like Gecko) Mobile/8J2<br>
 	Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30<br>
-	Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A5313e Safari/7534.48.3<br>
-	Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A5313e Safari/7534.48.3<br>
-	Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A5313e Safari/7534.48.3<br>
+	
 	Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.202 Safari/535.1<br>
 	Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; SAMSUNG; OMNIA7)　　　　　　----SAMSUNG MP7<br>
 	Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; XBLWP7; ZuneWP7) 　　　　　　　　----HTC MP7<br>
