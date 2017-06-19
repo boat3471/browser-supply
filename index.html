@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 	<title>浏览器检查</title>
 	<style>
 		body{ font-family:Consolas; }
@@ -26,22 +27,28 @@
 			}
 			
 			/* iPhone 平台 */
-			if(u.match(/\(iPhone/i)){
+			if(u.match(/iPhone/i)){
 				this.Mobile = this.Apple = this.iPhone = true;
+				if(u.match(/CriOS/i)) this.Chrome = true;
 				return;
 			}
 			
 			/* iPad 平台 */
 			if(u.match(/\(iPad/i)){
 				this.Mobile = this.Apple = this.iPad = true;
+				if(u.match(/CriOS/i)) this.Chrome = true;
 				return;
 			}
 			
 			/* iPod 平台 */
 			if(u.match(/\(iPod/i)){
 				this.Mobile = this.Apple = this.iPod = true;
+				if(u.match(/CriOS/i)) this.Chrome = true;
 				return;
 			}
+			
+			/* Mac 平台 */
+			
 			
 			/* BlackBerry 平台*/
 			if(u.match(/BlackBerry/i)){
@@ -72,10 +79,6 @@
 				//......
 				return;
 			}
-			
-			/* Mac 平台 */
-			
-			
 			
 			/* IE */
 			if(u.match(/Edge\//i)){ this.PC = this.IE = this.Edge = true; return; }
@@ -125,8 +128,19 @@
 			htmlList.push('</table>');
 			return htmlList.join('');
 		};
+		
 		var browser = new Browser();
 		document.write(browser.toString());
+		document.write('<br><br>');
+		document.write('appCodeName：' + navigator.appCodeName + '<br>');
+		document.write('appName：' + navigator.appName + '<br>');
+		document.write('appVersion：' + navigator.appVersion + '<br>');
+		document.write('cookieEnabled：' + navigator.cookieEnabled + '<br>');
+		document.write('language：' + navigator.language + '<br>');
+		document.write('product：' + navigator.product + '<br>');
+		document.write('platform：' + navigator.platform + '<br>');
+		document.write('vendor：' + navigator.vendor + '<br>');
+		document.write('vendorSub：' + navigator.vendorSub + '<br>');
 	</script>
 </div>
 <div style="padding: 30px 0; font-size: 12px; width: 3000px;">
