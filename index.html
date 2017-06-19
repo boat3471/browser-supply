@@ -10,7 +10,7 @@
 	</style>
 </head>
 <body>
-<div>V1.0.4</div>
+<div>V1.0.5</div>
 <div>
 	<script>
 		function Browser(){
@@ -26,6 +26,13 @@
 				this.Mobile = this.Android = true;
 				if(u.match(/Firefox/i)){ this.Firefox = true; this.Version = this.match(/Firefox\/(\S*)/)[1] || ''; }
 				if(u.match(/Chrome/i)){ this.Chrome = true; this.Version = this.match(/Chrome\/(\S*) /)[1] || ''; }
+				return;
+			}
+			
+			/* Android Opera */
+			if(u.match(/X11/i) && (u.match(/OPR/i) || u.match(/Opera/i))){
+				this.Mobile = this.Android = this.Opera = true;
+				this.Version = this.match(/OPR\/(\S*) /)[1] || this.match(/Opera\/(\S*) /)[1] || '';
 				return;
 			}
 			
@@ -98,12 +105,7 @@
 			if(u.match(/MSIE 4\./i)){ this.PC = this.IE = this.IE4 = true; return; }
 			
 			/* Opera 浏览器 */
-			if(u.match(/OPR\//i) || u.match(/Opera/i)){
-				if(u.match(/X11/i) && u.match(/Linux/i)) this.Mobile = this.Android = true;
-				else this.PC = true;
-				this.Opera = true;
-				return;
-			}
+			if(u.match(/OPR\//i) || u.match(/Opera/i)){ this.PC = this.Opera = true; return; }
 			if(u.match(/Firefox/i)){ this.PC = this.Firefox = true; }
 			if(u.match(/Chrome\//i) && !u.match(/OPR\//i) && !u.match(/Firefox\//i)){ this.PC = this.Chrome = true; }
 			if(u.match(/Macintosh\;/i) && u.match(/Safari\//i)){ this.PC = this.Safari = true; }
